@@ -1,0 +1,15 @@
+kafka-python
+numpy
+pandas
+scikit-learn
+matplotlib
+Pillow
+torch
+torchvision
+seaborn
+pymongo
+ipykernel
+transformers
+jupyter
+mysql
+mysql-connector-python

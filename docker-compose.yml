@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - ./log4j.properties:/etc/kafka/log4j.properties
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./mongo-data:/data/db
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-database
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: comments_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: America/Costa_Rica
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./metabase-data:/metabase.db
+    environment:
+      # Metabase utiliza una base de datos interna (H2) por defecto, lo cual es suficiente para pruebas.
+      # Para producción, se recomienda usar una base de datos externa como MySQL o PostgreSQL.
+      # La siguiente configuración utiliza una base de datos H2 persistente en el volumen.
+      MB_DB_FILE: /metabase.db/metabase
+    depends_on:
+      - mysql
+      - mongodb
+      

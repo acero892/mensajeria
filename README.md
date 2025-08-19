@@ -1,3 +1,8 @@
+# Kafka Server example
+
+Proyecto Olger Marin Calvo
+## Steps
+
 ### 1. Instalar el ambiente virtual y luego actrivarlo
 
 ``` bash
