@@ -1,7 +1,3 @@
-# Kafka Server example
-
-Proyecto Olger Marin Calvo
-## Steps
 
 ### 1. Instalar el ambiente virtual y luego actrivarlo
 
@@ -29,7 +25,7 @@ pip install -r requirements.txt
 docker-compose up
 ```
 
-### 3. Se debe de abrir una terminal para cada producer y se ejecuta de la siguiente manera
+### 4. 
 
 
 ``` bash
@@ -39,14 +35,14 @@ python Cliente2.py
 python Cliente3.py
 ```
 
-### 4. Se debe de abrir una terminal y ejecutar el consumer para recibir los datos
+### 5. 
 
 ``` bash
 cd src
 python consumer.py
 ```
 
-### 5. Se ejecuta la logica del analisis de sentimientos abriendo el archivo
+### 6. 
 
 ``` bash
 
